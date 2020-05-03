@@ -11,13 +11,13 @@ def postFunc(data, optNum):
     while num != 140:
         if (optNum == 1):
             ref.child(str(num)).update({
-                'long': data['location'][num - 1].split(",")[0],
+                'lon': data['location'][num - 1].split(",")[0],
                 'lat': data['location'][num - 1].split(",")[1],
-                'value': data['value'][num - 1]
+                'weight': data['value'][num - 1]
             })
         else:
             ref.child(str(num)).update({
-                'value': data['value'][num - 1]
+                'weight': data['value'][num - 1]
             })
         num+=1
 
