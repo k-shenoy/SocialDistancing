@@ -17,7 +17,7 @@ def postFunc(data, optNum):
             })
         else:
             ref.child(str(num)).update({
-                'value': data['value'][0]
+                'value': data['value'][num - 1]
             })
         num+=1
 
