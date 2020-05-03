@@ -12,12 +12,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.heatmaps.WeightedLatLng;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,17 +41,23 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(getApplicationContext());
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        final ArrayList<WeightedLatLng> locations = new ArrayList<>();
         db.child("locations").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Locations current = snapshot.getValue(Locations.class);
-                    System.out.println(current.toString());
+                    WeightedLatLng weightedLatLng = new WeightedLatLng(new LatLng(current.lat, current.lon), current.weight);
+                    locations.add(weightedLatLng);
+                    Log.e(TAG, current.toString());
                 }
+                System.out.println("AAAAAAAAAAAAA" + locations.size());
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
         });
 
 
