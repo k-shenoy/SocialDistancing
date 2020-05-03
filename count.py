@@ -5,6 +5,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 import pandas as pd
+import random
 
 def postFunc(data, optNum):
     num = 1
@@ -13,11 +14,11 @@ def postFunc(data, optNum):
             ref.child(str(num)).update({
                 'lon': data['location'][num - 1].split(",")[0],
                 'lat': data['location'][num - 1].split(",")[1],
-                'weight': data['value'][num - 1]
+                'weight': (data['value'][num - 1] + 1) * 40 + random.randrange(-1000, 1000) / 100
             })
         else:
             ref.child(str(num)).update({
-                'weight': data['value'][num - 1]
+                'weight': (data['value'][num - 1] + 1) * 40 + random.randrange(-1000, 1000) / 100
             })
         num+=1
 
