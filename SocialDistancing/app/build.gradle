@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -37,6 +36,5 @@ dependencies {
 
     // Google Play Services - Maps
     implementation 'com.google.android.gms:play-services:12.0.1'
-    implementation 'com.google.maps.android:android-maps-utils:1.1.0'
 }
 
