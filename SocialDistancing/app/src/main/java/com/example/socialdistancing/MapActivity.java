@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.instantapps.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -52,7 +52,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void getLocationPermission(){
         Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION,
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION};
 
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
@@ -60,6 +60,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 mLocationPermissionsGranted = true;
+                initMap();
             }else{
                 ActivityCompat.requestPermissions(this,
                         permissions,
