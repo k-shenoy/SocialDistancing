@@ -12,16 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.heatmaps.WeightedLatLng;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,35 +25,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(isServicesOK()){
+        if (isServicesOK()) {
             init();
         }
 
         FirebaseApp.initializeApp(getApplicationContext());
 
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        final ArrayList<WeightedLatLng> locations = new ArrayList<>();
-        db.child("locations").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    Locations current = snapshot.getValue(Locations.class);
-                    WeightedLatLng weightedLatLng = new WeightedLatLng(new LatLng(current.lat, current.lon), current.weight);
-                    locations.add(weightedLatLng);
-                    Log.e(TAG, current.toString());
-                }
-                System.out.println("AAAAAAAAAAAAA" + locations.size());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        });
-
-
     }
-    private void init(){
+
+    private void init() {
         Button btnMap = (Button) findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,22 +44,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean isServicesOK(){
+    public boolean isServicesOK() {
         Log.d(TAG, "isServicesOK: checking google services version");
 
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
 
-        if(available == ConnectionResult.SUCCESS){
+        if (available == ConnectionResult.SUCCESS) {
             //everything is fine and the user can make map requests
             Log.d(TAG, "isServicesOK: Google Play Services is working");
             return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
             //an error occurred but we can resolve it
             Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
-        }else{
+        } else {
             Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
         }
         return false;
