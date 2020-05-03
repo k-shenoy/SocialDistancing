@@ -12,6 +12,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,24 @@ public class MainActivity extends AppCompatActivity {
         if(isServicesOK()){
             init();
         }
+
+        FirebaseApp.initializeApp(getApplicationContext());
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child("locations").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Locations current = snapshot.getValue(Locations.class);
+                    System.out.println(current.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
     }
     private void init(){
         Button btnMap = (Button) findViewById(R.id.btnMap);
