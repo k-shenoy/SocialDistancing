@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1016020313862",
+    "firebase_url": "https://distancebetter.firebaseio.com",
+    "project_id": "distancebetter",
+    "storage_bucket": "distancebetter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016020313862:android:e6e5b49c1eddd19f8ee087",
+        "android_client_info": {
+          "package_name": "com.example.socialdistancing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016020313862-33lna945vks8i4isr4adgcej55gu3rqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0uCNzibgpSWEfH5udyKPb6SyDJiuYlbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016020313862-33lna945vks8i4isr4adgcej55gu3rqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
